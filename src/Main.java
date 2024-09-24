@@ -5,14 +5,16 @@ import java.util.regex.Pattern;
 class StringCalculator {
     private final String input;
 
-    public StringCalculator(String input) {
+    public StringCalculator(String input) throws Exception {
+        if (input.length() > 10) {
+            throw new Exception("Ввод не должен превышать 10 символов.");
+        }
         this.input = input;
     }
 
     public String calculate() throws Exception {
         Parser parser = new Parser(input);
         Operation operation = parser.parse();
-
         return operation.execute();
     }
 }
@@ -30,15 +32,12 @@ class Parser {
     public Operation parse() throws Exception {
         Pattern pattern = Pattern.compile("\"([^\"]+)\"\\s*([+\\-*/])\\s*(\"[^\"]+\"|\\d+)");
         Matcher matcher = pattern.matcher(input);
-
         if (!matcher.matches()) {
             throw new Exception("Неподходящее выражение.");
         }
-
         str1 = matcher.group(1);
         operator = matcher.group(2);
         str2 = matcher.group(3).replace("\"", "");
-
         return createOperation();
     }
 
@@ -138,7 +137,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите выражение (например, \"hello\" + \"world\"): ");
         String input = scanner.nextLine();
-
         try {
             StringCalculator calculator = new StringCalculator(input);
             String result = calculator.calculate();
@@ -147,5 +145,4 @@ public class Main {
             System.out.println("Ошибка: " + e.getMessage());
         }
     }
-//sss
 }
