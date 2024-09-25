@@ -6,7 +6,7 @@ class StringCalculator {
     private final String input;
 
     public StringCalculator(String input) throws Exception {
-        if (input.length() > 10) {
+        if (input.replace("\"","").length() > 10) {
             throw new Exception("Ввод не должен превышать 10 символов.");
         }
         this.input = input;
