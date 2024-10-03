@@ -92,7 +92,7 @@ public class Main {
     }
 
     private static String truncate(String str) {
-        if (str.length() >40) {
+        if (str.length() > 40) {
             return str.substring(0, 40) + "...";
         }
         return str;
