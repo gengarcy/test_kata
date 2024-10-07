@@ -18,26 +18,19 @@ public class Main {
     }
 
     public static String calculate(String input) throws Exception {
-
         String regex = "\"([^\"]*)\"\\s*([-+*/])\\s*(\"[^\"]*\"|\\d+)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
-
         if (!matcher.matches()) {
             throw new Exception("Неверное выражение.");
         }
-
         String operand1 = matcher.group(1);
         String operator = matcher.group(2);
         String operand2 = matcher.group(3);
-
         if (operand1.length() > 10) {
             throw new Exception("Длина строки не должна превышать 10 символов.");
         }
-
-
         if (operand2.startsWith("\"") && operand2.endsWith("\"")) {
-
             String strValue2 = operand2.substring(1, operand2.length() - 1);
             if (operator.equals("+")) {
                 return add(operand1, operand2);
@@ -47,7 +40,6 @@ public class Main {
                 throw new Exception("Неподдерживаемая операция с строкой.");
             }
         } else {
-
             int intValue = getIntegerValue(operand2);
             if (operator.equals("*")) {
                 return multiply(operand1, intValue);
@@ -79,6 +71,9 @@ public class Main {
     }
 
     private static String divide(String str, int n) {
+        if (n == 0) {
+            throw new ArithmeticException("Деление на ноль.");
+        }
         int newLength = str.length() / n;
         return truncate(str.substring(0, newLength));
     }
